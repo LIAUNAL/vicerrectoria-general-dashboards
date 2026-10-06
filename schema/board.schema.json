@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://liaunal.github.io/vicerrectoria-general-dashboards/schema/board.schema.json",
+  "title": "Vicerrectoría General dashboards tracking board",
+  "description": "Single source of truth for the tracking board. The operational schedule uses explicit one-based periods, each carrying its own calendar span, because the real plan runs in fortnights of uneven length. Cross-reference rules (unique ids, known owners, epics inside the period range) are enforced by lib/board.mjs, not by this schema.",
+  "type": "object",
+  "required": ["version", "program", "people", "epics", "items", "deliverables", "milestones"],
+  "additionalProperties": false,
+  "$defs": {
+    "isoDate": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "status": { "type": "string", "enum": ["todo", "in_progress", "review", "blocked", "done"] },
+    "identifier": { "type": "string", "minLength": 1 }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "type": "string", "minLength": 1 },
+    "updatedAt": { "$ref": "#/$defs/isoDate" },
+    "program": {
+      "type": "object",
+      "required": ["id", "name", "indicator", "timeUnit", "periods"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "name": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "indicator": { "type": "string", "minLength": 1 },
+        "institution": { "type": "string" },
+        "partners": { "type": "array", "items": { "type": "string" } },
+        "trl": { "type": "string" },
+        "timeUnit": { "type": "string", "enum": ["fortnight", "month"] },
+        "periods": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["index", "label", "startDate", "endDate"],
+            "additionalProperties": false,
+            "properties": {
+              "index": { "type": "integer", "minimum": 1 },
+              "label": { "type": "string", "minLength": 1 },
+              "startDate": { "$ref": "#/$defs/isoDate" },
+              "endDate": { "$ref": "#/$defs/isoDate" }
+            }
+          }
+        },
+        "description": { "type": "string" },
+        "generalObjective": { "type": "string" },
+        "specificObjectives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "statement"],
+            "additionalProperties": false,
+            "properties": {
+              "code": { "type": "string", "minLength": 1 },
+              "statement": { "type": "string", "minLength": 1 },
+              "problem": { "type": "string" }
+            }
+          }
+        },
+        "scope": { "type": "array", "items": { "type": "string" } },
+        "outOfScope": { "type": "array", "items": { "type": "string" } },
+        "sourceRepository": { "type": "string" },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "roadmap": {
+      "type": "object",
+      "description": "Longer-horizon proposal plan, informational only. Kept separate from the operational schedule because the two use different time bases and do not coincide in the source document.",
+      "required": ["timeUnit", "horizonMonths", "phases", "milestones"],
+      "additionalProperties": false,
+      "properties": {
+        "timeUnit": { "type": "string", "enum": ["month"] },
+        "horizonMonths": { "type": "integer", "minimum": 1 },
+        "source": { "type": "string" },
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "startMonth", "durationMonths"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/identifier" },
+              "title": { "type": "string", "minLength": 1 },
+              "objective": { "type": "string" },
+              "startMonth": { "type": "integer", "minimum": 1 },
+              "durationMonths": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "month"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/identifier" },
+              "code": { "type": "string" },
+              "title": { "type": "string", "minLength": 1 },
+              "month": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "name": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "enum": ["human", "agent"] }
+        }
+      }
+    },
+    "epics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "key", "title", "objective", "startPeriod", "duration"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "key": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "objective": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string" },
+          "startPeriod": { "type": "integer", "minimum": 1 },
+          "duration": { "type": "integer", "minimum": 1 },
+          "objectiveRef": { "type": "string" },
+          "color": { "type": "string" }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "key", "epic", "title", "type", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "key": { "type": "string", "minLength": 1 },
+          "epic": { "$ref": "#/$defs/identifier" },
+          "title": { "type": "string", "minLength": 1 },
+          "type": { "type": "string", "enum": ["epic", "story", "task", "spike", "doc"] },
+          "status": { "$ref": "#/$defs/status" },
+          "owner": { "type": "string" },
+          "startPeriod": { "type": "integer", "minimum": 1 },
+          "duration": { "type": "integer", "minimum": 1 },
+          "importance": { "type": "integer" },
+          "storyPoints": { "type": "integer", "minimum": 0 },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "deliverables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "epic", "duePeriod", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "title": { "type": "string", "minLength": 1 },
+          "epic": { "$ref": "#/$defs/identifier" },
+          "duePeriod": { "type": "integer", "minimum": 1 },
+          "status": { "$ref": "#/$defs/status" },
+          "location": { "type": "string" },
+          "acceptance": { "type": "string" }
+        }
+      }
+    },
+    "milestones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "period"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "code": { "type": "string" },
+          "title": { "type": "string", "minLength": 1 },
+          "period": { "type": "integer", "minimum": 1 },
+          "status": { "$ref": "#/$defs/status" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "description": "Data-integrity findings surfaced by the underlying platform's audit rules.",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "severity"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "$ref": "#/$defs/identifier" },
+          "title": { "type": "string", "minLength": 1 },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}

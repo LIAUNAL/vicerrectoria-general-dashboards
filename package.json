@@ -1,0 +1,19 @@
+{
+  "name": "vicerrectoria-general-dashboards",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Public tracking board for the institutional RAG dashboard prototype (indicator E2-02-A2) — LabIA, GCPDS and Vicerrectoría General, UNAL.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node scripts/check-board.mjs",
+    "build": "node scripts/build-site.mjs",
+    "serve": "node --run build && node scripts/serve.mjs",
+    "paca:seed": "node paca/seed.mjs",
+    "paca:sync": "node paca/sync.mjs"
+  }
+}
