@@ -35,14 +35,19 @@ desde el mismo archivo de datos. Detalles en [`paca/README.md`](paca/README.md).
 ## Estructura
 
 ```
-data/board.json           fuente de verdad: fases, ítems, entregables, hitos, hallazgos
+data/board.json           fuente de verdad: fases, ítems, contratos, entregables, hallazgos
 schema/board.schema.json  contrato estructural del archivo de datos
-lib/board.mjs             reglas de dominio: validación, avance, calendario
+lib/board.mjs             reglas de dominio: validación, avance, calendario, acentos
 site/                     tablero estático (HTML, CSS y un módulo ES)
 paca/                     cliente, siembra y sincronización con Paca
 scripts/                  verificación, construcción y servidor local
-test/                     52 pruebas sobre dominio, datos y mapeo a Paca
+docs/decisiones/          por qué el repositorio es como es
+test/                     79 pruebas sobre dominio, datos, contratos y mapeo a Paca
 ```
+
+Si va a cambiar algo estructural, lea antes el
+[registro de decisiones](docs/decisiones/README.md): cada una documenta el hecho
+que la obligó, no solo la preferencia.
 
 `lib/board.mjs` lo importan el sitio, la verificación de CI y los scripts de
 Paca sin copia intermedia, así que el tablero no puede discrepar de la
