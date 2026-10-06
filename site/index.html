@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Tablero de seguimiento · Vicerrectoría General — Dashboards</title>
+		<meta
+			name="description"
+			content="Tablero de seguimiento del prototipo de tablero institucional RAG para el sistema de auditoría interna de la Universidad Nacional de Colombia (indicador E2-02-A2)."
+		/>
+		<link rel="stylesheet" href="./styles.css" />
+	</head>
+	<body>
+		<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+		<header class="masthead">
+			<div class="masthead__inner">
+				<p class="masthead__eyebrow" id="program-partners"></p>
+				<h1 class="masthead__title" id="program-name"></h1>
+				<p class="masthead__subtitle" id="program-subtitle"></p>
+				<dl class="masthead__meta">
+					<div><dt>Indicador</dt><dd id="program-indicator"></dd></div>
+					<div><dt>Madurez</dt><dd id="program-trl"></dd></div>
+					<div><dt>Ventana</dt><dd id="program-window"></dd></div>
+					<div><dt>Actualizado</dt><dd id="program-updated"></dd></div>
+				</dl>
+			</div>
+		</header>
+
+		<main id="contenido">
+			<noscript>
+				<p class="notice notice--warn">
+					Este tablero necesita JavaScript para leer <code>data/board.json</code>. El archivo de datos es
+					legible por sí mismo si prefiere consultarlo directamente.
+				</p>
+			</noscript>
+
+			<p class="notice notice--error" id="load-error" hidden></p>
+
+			<section class="section" aria-labelledby="h-resumen">
+				<h2 class="section__title" id="h-resumen">Resumen</h2>
+				<div class="kpis" id="kpis"></div>
+				<div class="epics" id="epics"></div>
+			</section>
+
+			<section class="section" aria-labelledby="h-cronograma">
+				<h2 class="section__title" id="h-cronograma">Cronograma de ejecución</h2>
+				<p class="section__note" id="timeline-note"></p>
+				<div class="timeline-scroll">
+					<div class="timeline" id="timeline"></div>
+				</div>
+			</section>
+
+			<section class="section" aria-labelledby="h-tablero">
+				<div class="section__header">
+					<h2 class="section__title" id="h-tablero">Tablero de trabajo</h2>
+					<div class="filters">
+						<label>
+							<span>Fase</span>
+							<select id="filter-epic"></select>
+						</label>
+						<label>
+							<span>Responsable</span>
+							<select id="filter-owner"></select>
+						</label>
+					</div>
+				</div>
+				<div class="kanban" id="kanban"></div>
+			</section>
+
+			<section class="section" aria-labelledby="h-entregables">
+				<h2 class="section__title" id="h-entregables">Entregables</h2>
+				<div class="table-scroll">
+					<table class="table" id="deliverables">
+						<thead>
+							<tr>
+								<th scope="col">Entregable</th>
+								<th scope="col">Fase</th>
+								<th scope="col">Compromiso</th>
+								<th scope="col">Estado</th>
+								<th scope="col">Criterio de verificación</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</section>
+
+			<section class="section" aria-labelledby="h-hitos">
+				<h2 class="section__title" id="h-hitos">Hitos</h2>
+				<ol class="milestones" id="milestones"></ol>
+			</section>
+
+			<section class="section" aria-labelledby="h-hallazgos">
+				<h2 class="section__title" id="h-hallazgos">Hallazgos sobre los datos de origen</h2>
+				<p class="section__note">
+					Discrepancias detectadas en la fuente. Se publican sin resolver: elegir una cifra por el equipo
+					sustituiría la evidencia por una interpretación.
+				</p>
+				<ul class="findings" id="findings"></ul>
+			</section>
+
+			<section class="section" aria-labelledby="h-objetivos">
+				<h2 class="section__title" id="h-objetivos">Objetivos</h2>
+				<blockquote class="objective-general" id="objective-general"></blockquote>
+				<ol class="objectives" id="objectives"></ol>
+			</section>
+
+			<section class="section" aria-labelledby="h-alcance">
+				<h2 class="section__title" id="h-alcance">Alcance</h2>
+				<div class="scope">
+					<div class="scope__col">
+						<h3 class="scope__title">Dentro del alcance</h3>
+						<ul id="scope-in"></ul>
+					</div>
+					<div class="scope__col scope__col--out">
+						<h3 class="scope__title">Fuera del alcance</h3>
+						<ul id="scope-out"></ul>
+					</div>
+				</div>
+			</section>
+
+			<section class="section" aria-labelledby="h-ruta" id="roadmap-section" hidden>
+				<h2 class="section__title" id="h-ruta">Hoja de ruta de la propuesta</h2>
+				<p class="section__note" id="roadmap-note"></p>
+				<div class="timeline-scroll">
+					<div class="timeline timeline--roadmap" id="roadmap"></div>
+				</div>
+				<ol class="milestones" id="roadmap-milestones"></ol>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<p id="footer-source"></p>
+			<p>
+				Datos en <a href="./data/board.json">data/board.json</a>, contrato en
+				<a href="./schema/board.schema.json">schema/board.schema.json</a>.
+			</p>
+		</footer>
+
+		<script type="module" src="./app.mjs"></script>
+	</body>
+</html>
