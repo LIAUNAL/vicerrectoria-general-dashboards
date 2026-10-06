@@ -82,11 +82,11 @@
     ]
   },
   "people": [
-    { "id": "juan-carlos", "name": "Juan Carlos", "role": "Responsable — proceso ETL con OCR y esquema de datos", "kind": "human" },
-    { "id": "carlos-perez", "name": "Carlos Pérez", "role": "Responsable — modelo de datos del prototipo", "kind": "human" },
-    { "id": "diego-perez", "name": "Diego Pérez", "role": "Responsable — módulos backend, APIs y servicios", "kind": "human" },
-    { "id": "sebastian-mendez", "name": "Sebastián Méndez", "role": "Responsable — arquitectura funcional de agentes RAG", "kind": "human" },
-    { "id": "gcpds", "name": "GCPDS", "role": "Responsable — informe técnico general y coordinación", "kind": "human" }
+    { "id": "juan-carlos", "name": "Juan Carlos Aguirre Arango", "role": "Agentes RAG, indexación y trazabilidad (OPS 482)", "kind": "human" },
+    { "id": "carlos-perez", "name": "Carlos Andrés Pérez Aguirre", "role": "Modelo de datos, indicadores y vistas de seguimiento (OPS 480)", "kind": "human" },
+    { "id": "diego-perez", "name": "Diego Armando Pérez Rosero", "role": "Plataforma: backend, frontend, integración y despliegue (OPS 487)", "kind": "human" },
+    { "id": "sebastian-mendez", "name": "Juan Sebastián Méndez Rondón", "role": "Agentes RAG, integración de modelos y pruebas funcionales (OPS 488)", "kind": "human" },
+    { "id": "gcpds", "name": "GCPDS", "role": "Informe técnico general y coordinación", "kind": "human" }
   ],
   "epics": [
     {
@@ -189,12 +189,120 @@
     { "id": "m1", "code": "M1", "title": "Presentación a la dirección universitaria", "period": 3, "status": "done", "description": "Cierre del avance de las fases 1 a 3 y de la propuesta de arquitectura de despliegue." },
     { "id": "m2", "code": "M2", "title": "Cierre y entrega final", "period": 7, "status": "todo", "description": "Copiloto sobre la API en operación, entrega documental y capacitación." }
   ],
+  "contracts": [
+    {
+      "id": "ops-480",
+      "person": "carlos-perez",
+      "number": "OPS 480 de 2026",
+      "objeto": "Prestar servicios profesionales en el marco del proyecto «Fortalecimiento del Sistema de Integridad y Probidad SIP-UNAL para la acción institucional» para la Vicerrectoría General de la Universidad Nacional de Colombia.",
+      "startDate": "2026-08-12",
+      "endDate": "2026-11-30",
+      "reportedFrom": "2026-08-12",
+      "reportedTo": "2026-08-31",
+      "epic": "f1",
+      "obligations": [
+        { "id": "ops-480-1", "kind": "technical", "text": "Acompañar la identificación, clasificación y normalización de fuentes de información estructurada y no estructurada.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-480-2", "kind": "technical", "text": "Definir indicadores, filtros y vistas de seguimiento de acuerdo con los requerimientos priorizados.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-480-3", "kind": "technical", "text": "Desarrollar los productos objeto de la orden contractual, garantizando el cumplimiento de los lineamientos técnicos, metodológicos y de calidad establecidos por la Universidad y las instrucciones de la supervisión.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-480-4", "kind": "administrative", "text": "Realizar el desplazamiento a nivel nacional cuando se requiera para la ejecución de actividades en el marco del proyecto.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-480-5", "kind": "administrative", "text": "Realizar la administración y el control de la documentación generada en la ejecución de la orden contractual, de acuerdo con los lineamientos de la Oficina Nacional de Gestión y Patrimonio.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-480-6", "kind": "administrative", "text": "Asistir de manera presencial o virtual a las reuniones convocadas por la supervisión o la dependencia para el cumplimiento del objeto contractual.", "progressPeriod": 25, "progressAccumulated": 25 }
+      ],
+      "products": [
+        { "id": "ops-480-p1", "status": "done", "title": "Producto 1 — modelo de datos del prototipo: diagrama y especificación del modelo entidad-relación, incluyendo atributos, metadatos y definición de variables clave." }
+      ]
+    },
+    {
+      "id": "ops-482",
+      "person": "juan-carlos",
+      "number": "OPS 482 de 2026",
+      "objeto": "Prestar servicios profesionales en el marco del proyecto «Fortalecimiento del Sistema de Integridad y Probidad SIP-UNAL para la acción institucional» para la Vicerrectoría General de la Universidad Nacional de Colombia.",
+      "startDate": "2026-08-14",
+      "endDate": "2026-11-30",
+      "reportedFrom": "2026-08-14",
+      "reportedTo": "2026-08-31",
+      "epic": "f3",
+      "obligations": [
+        { "id": "ops-482-1", "kind": "technical", "text": "Diseñar la arquitectura funcional de los agentes RAG y su relación con las fuentes documentales del proyecto.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-2", "kind": "technical", "text": "Construir procesos de segmentación, indexación y recuperación semántica de documentos institucionales.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-3", "kind": "technical", "text": "Integrar modelos LLM mediante API o modelos locales, según las restricciones técnicas e institucionales definidas.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-4", "kind": "technical", "text": "Implementar agentes para búsqueda documental, contraste de información, resumen de evidencias y generación asistida de borradores de informes o respuestas.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-5", "kind": "technical", "text": "Definir mecanismos básicos de trazabilidad de fuentes, control de contexto, citación de documentos y reducción de respuestas no verificables.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-6", "kind": "technical", "text": "Realizar pruebas funcionales de los agentes con casos de uso priorizados por el analista funcional.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-7", "kind": "technical", "text": "Documentar la arquitectura, configuración, dependencias, limitaciones y recomendaciones de uso de los módulos de IA.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-8", "kind": "administrative", "text": "Realizar el desplazamiento a nivel nacional cuando se requiera para la ejecución de las actividades en el marco del proyecto.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-9", "kind": "administrative", "text": "Realizar la administración y el control de la documentación generada en la ejecución de la orden contractual, de acuerdo con los lineamientos de la Oficina Nacional de Gestión y Patrimonio.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-482-10", "kind": "administrative", "text": "Presentar informe de ejecución de actividades, con soportes, previo a cada pago.", "progressPeriod": 25, "progressAccumulated": 25 }
+      ],
+      "products": [
+        { "id": "ops-482-p1", "status": "done", "title": "Producto 1 — diagrama y especificación del flujo de trabajo de los agentes RAG y su interacción con los repositorios documentales y el pipeline de datos e indexación; módulos o scripts de segmentación, vectorización y almacenamiento para la búsqueda semántica." }
+      ]
+    },
+    {
+      "id": "ops-487",
+      "person": "diego-perez",
+      "number": "OPS 487 de 2026",
+      "objeto": "Prestar servicios profesionales en el marco del proyecto «Fortalecimiento del Sistema de Integridad y Probidad SIP-UNAL para la acción institucional» para la Vicerrectoría General de la Universidad Nacional de Colombia.",
+      "startDate": "2026-08-14",
+      "endDate": "2026-11-30",
+      "reportedFrom": "2026-08-01",
+      "reportedTo": "2026-08-31",
+      "epic": "f4",
+      "obligations": [
+        { "id": "ops-487-1", "kind": "technical", "text": "Diseñar e implementar los componentes backend requeridos para la carga, consulta, procesamiento y exposición de datos.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-2", "kind": "technical", "text": "Desarrollar o adaptar las interfaces frontend necesarias para la interacción con tableros, agentes y módulos de consulta.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-3", "kind": "technical", "text": "Integrar servicios de IA, base de datos relacional, base vectorial, almacenamiento documental y componentes de visualización.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-4", "kind": "technical", "text": "Implementar mecanismos básicos de autenticación, perfiles de usuario y control de acceso, de acuerdo con el alcance del prototipo.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-5", "kind": "technical", "text": "Configurar el ambiente de despliegue en nube y apoyar la contenerización de servicios mediante Docker u otra tecnología equivalente.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-6", "kind": "technical", "text": "Gestionar el repositorio de código, la estructura del proyecto, dependencias, variables de entorno y configuración de despliegue.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-7", "kind": "technical", "text": "Elaborar manual técnico de instalación, despliegue, operación básica, mantenimiento y recomendaciones para escalamiento institucional.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-8", "kind": "administrative", "text": "Realizar el desplazamiento a nivel nacional cuando se requiera para la ejecución de actividades en el marco del proyecto.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-9", "kind": "administrative", "text": "Realizar la administración y el control de la documentación generada en la ejecución de la orden contractual, de acuerdo con los lineamientos de la Oficina Nacional de Gestión y Patrimonio.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-487-10", "kind": "administrative", "text": "Presentar informe de ejecución de actividades, con soportes, previo a cada pago.", "progressPeriod": 25, "progressAccumulated": 25 }
+      ],
+      "products": [
+        { "id": "ops-487-p1", "status": "done", "title": "Producto 1 — módulos backend de gestión de datos, APIs y servicios listos para la carga, procesamiento, consulta semántica y relacional, y exposición de datos a la plataforma." }
+      ]
+    },
+    {
+      "id": "ops-488",
+      "person": "sebastian-mendez",
+      "number": "OPS 488 de 2026",
+      "objeto": "Prestar servicios profesionales en el marco del proyecto «Fortalecimiento del Sistema de Integridad y Probidad SIP-UNAL para la acción institucional» para la Vicerrectoría General de la Universidad Nacional de Colombia.",
+      "startDate": "2026-08-14",
+      "endDate": "2026-11-30",
+      "reportedFrom": "2026-08-14",
+      "reportedTo": "2026-08-31",
+      "epic": "f3",
+      "obligations": [
+        { "id": "ops-488-1", "kind": "technical", "text": "Diseñar la arquitectura funcional de los agentes RAG y su relación con las fuentes documentales del proyecto.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-2", "kind": "technical", "text": "Construir procesos de segmentación, indexación y recuperación semántica de documentos institucionales.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-3", "kind": "technical", "text": "Integrar modelos LLM mediante API o modelos locales, según las restricciones técnicas e institucionales definidas.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-4", "kind": "technical", "text": "Implementar agentes para búsqueda documental, contraste de información, resumen de evidencias y generación asistida de borradores de informes o respuestas.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-5", "kind": "technical", "text": "Definir mecanismos básicos de trazabilidad de fuentes, control de contexto, citación de documentos y reducción de respuestas no verificables.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-6", "kind": "technical", "text": "Realizar pruebas funcionales de los agentes con casos de uso priorizados por el analista funcional.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-7", "kind": "technical", "text": "Documentar la arquitectura, configuración, dependencias, limitaciones y recomendaciones de uso de los módulos de IA.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-8", "kind": "administrative", "text": "Realizar el desplazamiento a nivel nacional cuando se requiera para la ejecución de las actividades en el marco del proyecto.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-9", "kind": "administrative", "text": "Realizar la administración y el control de la documentación generada en la ejecución de la orden contractual, de acuerdo con los lineamientos de la Oficina Nacional de Gestión y Patrimonio.", "progressPeriod": 25, "progressAccumulated": 25 },
+        { "id": "ops-488-10", "kind": "administrative", "text": "Presentar informe de ejecución de actividades, con soportes, previo al pago.", "progressPeriod": 25, "progressAccumulated": 25 }
+      ],
+      "products": [
+        { "id": "ops-488-p1", "status": "done", "title": "Producto 1 — diagrama y especificación del flujo de trabajo de los agentes RAG y su interacción con los repositorios documentales y el pipeline de datos e indexación; módulos o scripts de segmentación, vectorización y almacenamiento para la búsqueda semántica." }
+      ]
+    }
+  ],
   "findings": [
     { "id": "h-schedules", "title": "Los dos cronogramas de la fuente no coinciden", "severity": "high", "detail": "El informe contiene un plan a 24 meses con hitos H1–H6 y un cronograma de ejecución en 7 quincenas con hitos M1–M2. No se halló en la fuente una relación explícita entre ambos. Este tablero sigue el de quincenas porque es el único con estado de ejecución." },
     { "id": "h-oe4", "title": "El cronograma referencia un OE4 que no existe en los objetivos", "severity": "medium", "detail": "La fase 4 del cronograma de ejecución se rotula como OE4, pero la sección de objetivos declara únicamente OE1, OE2 y OE3." },
     { "id": "h-tables", "title": "Tablas declaradas frente a tablas medidas", "severity": "medium", "detail": "El modelo declara 55 tablas; la medición sobre el acervo arroja 154. Ninguna operación reproduce 55. El informe usa el valor medido." },
     { "id": "h-figures", "title": "Cifras trazables declaradas frente a medidas", "severity": "medium", "detail": "Se declaran 428 cifras trazables; la medición arroja 808 tripletas distintas. El informe usa el valor medido." },
     { "id": "h-coverage", "title": "Cobertura declarada y no verificada", "severity": "medium", "detail": "Los 413 estudiantes en 7 sedes provienen de un único documento cualitativo, sin contraparte que permita verificarlos." },
-    { "id": "h-lapaz", "title": "Una sede sin financiación declarada", "severity": "medium", "detail": "El registro de proyectos nombra 9 sedes y aporta cifras para 8. La sede de La Paz se publica como hallazgo; no se interpola ni se omite." }
+    { "id": "h-lapaz", "title": "Una sede sin financiación declarada", "severity": "medium", "detail": "El registro de proyectos nombra 9 sedes y aporta cifras para 8. La sede de La Paz se publica como hallazgo; no se interpola ni se omite." },
+    { "id": "h-objeto", "title": "El objeto contractual nombra un proyecto distinto al del informe técnico", "severity": "high", "detail": "Las cuatro órdenes contractuales tienen por objeto el proyecto «Fortalecimiento del Sistema de Integridad y Probidad SIP-UNAL para la acción institucional». El informe técnico enmarca el trabajo en el seguimiento del sistema de auditoría interna bajo el indicador E2-02-A2. Ambos marcos se conservan sin fusionarlos: determinar su relación corresponde a la supervisión." },
+    { "id": "h-etl-sin-contrato", "title": "La actividad de ETL y OCR no aparece en ninguna obligación contratada", "severity": "high", "detail": "El informe técnico atribuye la actividad 1 (proceso ETL con OCR y diseño del esquema) a Juan Carlos Aguirre Arango. Su orden contractual no contiene obligaciones de ETL, OCR, digitalización ni extracción de texto, y ninguna de las otras tres las contiene. El tablero conserva la atribución del informe para el trabajo entregado y registra aquí la ausencia." },
+    { "id": "h-alcance-plataforma", "title": "El alcance contratado de plataforma excede lo que el informe llama backend", "severity": "low", "detail": "La OPS 487 incorpora además interfaces frontend, autenticación y control de acceso, despliegue en nube y contenerización, gestión del repositorio y manual técnico de instalación. El informe técnico describe esta actividad únicamente como módulos backend, APIs y servicios." },
+    { "id": "h-periodo-487", "title": "Un informe de ejecución cubre un periodo anterior al inicio del contrato", "severity": "medium", "detail": "La OPS 487 declara inicio el 14 de agosto de 2026 y reporta ejecución desde el 1 de agosto de 2026. La inconsistencia está en el documento fuente; cuál de las dos fechas es la correcta no se determina desde él." },
+    { "id": "h-corpus-cuatro", "title": "El acervo tiene cuatro orígenes documentales, no tres", "severity": "medium", "detail": "La carpeta compartida del proyecto contiene PIC-Info_, Pic_Info-2, Pic_Info-3 y Pic_Info-4. El informe técnico declara tres orígenes institucionales con 23 archivos. El cuarto origen no está caracterizado en el informe." },
+    { "id": "h-sin-contrato-quinta", "title": "Una quinta persona del equipo no tiene orden contractual en la carpeta", "severity": "medium", "detail": "La carpeta de pagos contiene cuatro órdenes contractuales. Una quinta integrante del equipo fue señalada por la coordinación, sin contrato correspondiente entre los documentos disponibles." }
   ]
 }

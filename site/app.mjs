@@ -10,6 +10,7 @@
  */
 import {
 	ITEM_STATUSES,
+	computeContractProgress,
 	computeEpicProgress,
 	computeProgramProgress,
 	periodRange,
@@ -388,6 +389,111 @@ function renderKanban(board) {
 	draw();
 }
 
+/**
+ * Contracted scope, one card per person.
+ *
+ * Technical obligations are shown open and administrative ones folded away:
+ * the boilerplate every order repeats would otherwise bury the scope that
+ * actually distinguishes one contract from another.
+ */
+function renderContracts(board) {
+	const contracts = board.contracts ?? [];
+	if (contracts.length === 0) return;
+	document.getElementById("contracts-section").hidden = false;
+
+	const container = document.getElementById("contracts");
+	const peopleById = new Map(board.people.map((person) => [person.id, person]));
+	const epicsById = new Map(board.epics.map((epic) => [epic.id, epic]));
+
+	const obligationRow = (obligation) => {
+		const row = element("li", "obligation");
+		const bar = element("div", "obligation__bar");
+		const fill = element("div", "obligation__fill");
+		fill.style.width = `${obligation.progressAccumulated}%`;
+		bar.append(fill);
+		row.append(
+			element("p", "obligation__text", obligation.text),
+			element("span", "obligation__pct", `${obligation.progressAccumulated}%`),
+			bar,
+		);
+		return row;
+	};
+
+	for (const contract of contracts) {
+		const person = peopleById.get(contract.person);
+		const epic = epicsById.get(contract.epic);
+		const progress = computeContractProgress(contract);
+		const color = epic?.color ?? "var(--accent)";
+
+		const card = element("article", "contract");
+		card.style.setProperty("--epic-color", color);
+
+		const head = element("div", "contract__head");
+		head.append(element("h3", "contract__person", person?.name ?? contract.person));
+		if (epic !== undefined) head.append(pill(epic.key, color, true));
+		head.append(element("span", "contract__number", contract.number));
+		card.append(head);
+
+		card.append(element("p", "contract__role", person?.role ?? ""));
+
+		const meta = element("p", "contract__meta");
+		meta.append(
+			element("span", undefined, `${formatDate(contract.startDate)} – ${formatDate(contract.endDate)}`),
+			element("span", undefined, `${progress.total} obligaciones`),
+			element("span", undefined, `${progress.percent}% reportado`),
+		);
+		card.append(meta);
+
+		const bar = element("div", "epic__bar");
+		bar.setAttribute("role", "progressbar");
+		bar.setAttribute("aria-valuenow", String(progress.percent));
+		bar.setAttribute("aria-valuemin", "0");
+		bar.setAttribute("aria-valuemax", "100");
+		bar.setAttribute("aria-label", `Avance reportado de ${person?.name ?? contract.person}`);
+		const fill = element("div", "epic__fill");
+		fill.style.width = `${progress.percent}%`;
+		bar.append(fill);
+		card.append(bar);
+
+		const technical = contract.obligations.filter((obligation) => obligation.kind !== "administrative");
+		const administrative = contract.obligations.filter((obligation) => obligation.kind === "administrative");
+
+		if (technical.length > 0) {
+			const list = element("ol", "obligations");
+			for (const obligation of technical) list.append(obligationRow(obligation));
+			card.append(list);
+		}
+
+		if (administrative.length > 0) {
+			const details = element("details", "contract__fold");
+			details.append(
+				element("summary", undefined, `${administrative.length} obligaciones administrativas`),
+			);
+			const list = element("ol", "obligations");
+			for (const obligation of administrative) list.append(obligationRow(obligation));
+			details.append(list);
+			card.append(details);
+		}
+
+		for (const product of contract.products ?? []) {
+			const row = element("p", "contract__product");
+			row.append(
+				pill(STATUS_LABELS[product.status ?? "todo"], statusColor(product.status ?? "todo")),
+				element("span", undefined, product.title),
+			);
+			card.append(row);
+		}
+
+		container.append(card);
+	}
+
+	setText(
+		"contracts-note",
+		"Obligaciones y avance tomados de los informes de ejecución firmados. Es una lente distinta " +
+			"de la del tablero de trabajo: el porcentaje lo declara cada contratista y no se suma al avance general.",
+	);
+}
+
 function renderDeliverables(board) {
 	const body = document.querySelector("#deliverables tbody");
 	const epicsById = new Map(board.epics.map((epic) => [epic.id, epic]));
@@ -567,6 +673,7 @@ async function main() {
 	renderEpics(board);
 	renderTimeline(board, position);
 	renderKanban(board);
+	renderContracts(board);
 	renderDeliverables(board);
 	renderMilestones(board);
 	renderFindings(board);

@@ -9,7 +9,13 @@ import { readFile } from "node:fs/promises";
 import { argv, exit, stdout } from "node:process";
 import { fileURLToPath } from "node:url";
 
-import { computeEpicProgress, computeProgramProgress, scheduleBounds, validateBoard } from "../lib/board.mjs";
+import {
+	computeContractProgress,
+	computeEpicProgress,
+	computeProgramProgress,
+	scheduleBounds,
+	validateBoard,
+} from "../lib/board.mjs";
 
 const DEFAULT_BOARD = fileURLToPath(new URL("../data/board.json", import.meta.url));
 
@@ -54,6 +60,19 @@ async function main() {
 			`      ${epic.key.padEnd(6)} ${String(epicProgress.percent).padStart(3)}%  ` +
 				`${epicProgress.done}/${epicProgress.total}  ${epic.title}\n`,
 		);
+	}
+
+	const contracts = board.contracts ?? [];
+	if (contracts.length > 0) {
+		const peopleById = new Map(board.people.map((person) => [person.id, person.name]));
+		stdout.write(`      contracts    ${contracts.length}\n`);
+		for (const contract of contracts) {
+			const progress = computeContractProgress(contract);
+			stdout.write(
+				`      ${contract.number.padEnd(16)} ${String(progress.percent).padStart(3)}%  ` +
+					`${progress.total} obligaciones  ${peopleById.get(contract.person)}\n`,
+			);
+		}
 	}
 	return 0;
 }

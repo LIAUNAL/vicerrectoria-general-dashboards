@@ -3,7 +3,14 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { computeEpicProgress, periodRange, scheduleBounds, validateBoard } from "../lib/board.mjs";
+import {
+	computeContractProgress,
+	computeEpicProgress,
+	contractsByPerson,
+	periodRange,
+	scheduleBounds,
+	validateBoard,
+} from "../lib/board.mjs";
 
 /**
  * Regression tests over the real published data, so a hand edit to
@@ -62,5 +69,56 @@ test("no monetary figure leaked into the public board", () => {
 	const serialized = JSON.stringify(board);
 	for (const pattern of [/\$\s?\d/, /\bCOP\b/, /\bUSD\b/, /\bmillones\b/i, /\bpesos\b/i]) {
 		assert.ok(!pattern.test(serialized), `board contains a monetary figure matching ${pattern}`);
+	}
+});
+
+test("no personal identifier leaked from the service orders", () => {
+	// The payment packages carry cédulas, phone numbers and emails; none belong here.
+	// Hex colours are stripped first: they are six-digit runs that identify nobody.
+	const serialized = JSON.stringify(board).replace(/#[0-9a-fA-F]{6}\b/g, "#colour");
+	const patterns = [
+		[/\b\d{6,12}\b/, "an identification-like number"],
+		[/[\w.+-]+@[\w-]+\.[\w.]+/, "an email address"],
+		[/\b(?:C\.C\.|C\.E\.|c[ée]dula)\b/i, "a cédula reference"],
+	];
+	for (const [pattern, description] of patterns) {
+		const match = serialized.match(pattern);
+		assert.equal(match, null, `board contains ${description}: ${match?.[0]}`);
+	}
+});
+
+test("every contract belongs to a listed person and reports progress", () => {
+	for (const contract of board.contracts ?? []) {
+		assert.ok(
+			board.people.some((person) => person.id === contract.person),
+			`${contract.number} has no matching person`,
+		);
+		const progress = computeContractProgress(contract);
+		assert.ok(progress.total > 0, `${contract.number} lists no obligation`);
+		assert.ok(progress.percent >= 0 && progress.percent <= 100);
+	}
+});
+
+test("every contract that names an epic names one that exists", () => {
+	const epicIds = new Set(board.epics.map((epic) => epic.id));
+	for (const contract of board.contracts ?? []) {
+		if (contract.epic === undefined) continue;
+		assert.ok(epicIds.has(contract.epic), `${contract.number} points at unknown epic ${contract.epic}`);
+	}
+});
+
+test("no person holds more than one contract", () => {
+	for (const [person, held] of contractsByPerson(board)) {
+		assert.equal(held.length, 1, `${person} holds ${held.length} contracts`);
+	}
+});
+
+test("every contract sits inside the tracked window", () => {
+	const bounds = scheduleBounds(board);
+	for (const contract of board.contracts ?? []) {
+		assert.ok(
+			contract.endDate <= bounds.endDate,
+			`${contract.number} ends at ${contract.endDate}, past the tracked window ${bounds.endDate}`,
+		);
 	}
 });
