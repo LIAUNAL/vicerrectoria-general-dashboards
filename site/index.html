@@ -1,8 +1,17 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			// Resolve the theme before the first paint, otherwise a light-theme
+			// reader gets a dark flash on every navigation.
+			(() => {
+				const stored = localStorage.getItem("vg-board-theme");
+				const system = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+				document.documentElement.dataset.theme = stored === "light" || stored === "dark" ? stored : system;
+			})();
+		</script>
 		<title>Tablero de seguimiento · Vicerrectoría General — Dashboards</title>
 		<meta
 			name="description"
@@ -12,6 +21,13 @@
 	</head>
 	<body>
 		<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+		<div class="toolbar">
+			<button type="button" id="btn-theme" aria-live="polite">
+				<span id="theme-icon" aria-hidden="true">◑</span>
+				<span id="theme-label">Tema</span>
+			</button>
+		</div>
 
 		<header class="masthead">
 			<div class="masthead__inner">

@@ -10,6 +10,7 @@
  */
 import {
 	ITEM_STATUSES,
+	accentVar,
 	computeContractProgress,
 	computeEpicProgress,
 	computeProgramProgress,
@@ -52,6 +53,37 @@ const MONTHS = [
 ];
 
 const statusColor = (status) => `var(--status-${status})`;
+
+/**
+ * Theme control.
+ *
+ * The board gets projected in rooms whose lighting does not match the operating
+ * system preference, so the choice has to be reachable and has to persist.
+ */
+const THEME_KEY = "vg-board-theme";
+
+function setUpTheme() {
+	const button = document.getElementById("btn-theme");
+	const icon = document.getElementById("theme-icon");
+	const label = document.getElementById("theme-label");
+	if (button === null) return;
+
+	const paint = () => {
+		const dark = document.documentElement.dataset.theme !== "light";
+		icon.textContent = dark ? "◑" : "◐";
+		label.textContent = dark ? "Oscuro" : "Claro";
+		button.setAttribute("aria-label", `Tema ${dark ? "oscuro" : "claro"}. Cambiar a ${dark ? "claro" : "oscuro"}.`);
+	};
+
+	button.addEventListener("click", () => {
+		const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+		document.documentElement.dataset.theme = next;
+		localStorage.setItem(THEME_KEY, next);
+		paint();
+	});
+
+	paint();
+}
 
 function element(tag, className, text) {
 	const node = document.createElement(tag);
@@ -164,7 +196,7 @@ function renderEpics(board) {
 	const container = document.getElementById("epics");
 	for (const epic of board.epics) {
 		const progress = computeEpicProgress(board, epic.id);
-		const color = epic.color ?? "var(--accent)";
+		const color = accentVar(epic.color);
 
 		const row = element("article", "epic");
 		row.style.setProperty("--epic-color", color);
@@ -212,7 +244,9 @@ function timelineRow({ label, labelClass, start, duration, total, color, open, c
 			if (labelClass === "timeline__label--epic") bar.classList.add("timeline__bar--epic");
 			bar.style.setProperty("--bar-color", color);
 			bar.style.gridColumn = `span ${duration}`;
-			if (barLabel !== undefined) bar.textContent = barLabel;
+			// The percentage rides in its own chip: over a hatched bar, plain text
+			// loses contrast against the stripes in both themes.
+			if (barLabel !== undefined) bar.append(element("span", "timeline__bar-label", barLabel));
 			bar.title = `${label} · periodos ${start} a ${start + duration - 1}`;
 			nodes.push(bar);
 			period += duration;
@@ -242,7 +276,7 @@ function renderTimeline(board, position) {
 	}
 
 	for (const epic of board.epics) {
-		const color = epic.color ?? "var(--accent)";
+		const color = accentVar(epic.color);
 		const progress = computeEpicProgress(board, epic.id);
 		container.append(
 			...timelineRow({
@@ -358,7 +392,7 @@ function renderKanban(board) {
 			for (const item of inColumn) {
 				const epic = epicsById.get(item.epic);
 				const card = element("li", "card");
-				card.style.setProperty("--epic-color", epic?.color ?? "var(--accent)");
+				card.style.setProperty("--epic-color", accentVar(epic?.color));
 
 				const top = element("div", "card__top");
 				top.append(
@@ -423,7 +457,7 @@ function renderContracts(board) {
 		const person = peopleById.get(contract.person);
 		const epic = epicsById.get(contract.epic);
 		const progress = computeContractProgress(contract);
-		const color = epic?.color ?? "var(--accent)";
+		const color = accentVar(epic?.color);
 
 		const card = element("article", "contract");
 		card.style.setProperty("--epic-color", color);
@@ -510,8 +544,7 @@ function renderDeliverables(board) {
 		}
 
 		const phase = element("td");
-		const phasePill = pill(epic?.key ?? deliverable.epic, epic?.color ?? "var(--accent)", true);
-		phase.append(phasePill);
+		phase.append(pill(epic?.key ?? deliverable.epic, accentVar(epic?.color), true));
 
 		const due = element("td", undefined, periodRange(board.program, deliverable.duePeriod).label);
 
@@ -607,7 +640,7 @@ function renderRoadmap(board) {
 				start: phase.startMonth,
 				duration: phase.durationMonths,
 				total,
-				color: "var(--slate-600)",
+				color: "var(--external-stroke)",
 				open: true,
 				current: null,
 			}),
@@ -649,6 +682,8 @@ function fail(message) {
 }
 
 async function main() {
+	setUpTheme();
+
 	let board;
 	try {
 		const response = await fetch("./data/board.json", { cache: "no-cache" });
