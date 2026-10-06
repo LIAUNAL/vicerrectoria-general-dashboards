@@ -1,0 +1,200 @@
+{
+  "$schema": "../schema/board.schema.json",
+  "version": "1.0.0",
+  "updatedAt": "2026-10-05",
+  "program": {
+    "id": "vg-dashboards-e2-02-a2",
+    "name": "Tablero Institucional RAG para el Sistema de Auditoría Interna",
+    "subtitle": "Prototipo de agentes de recuperación aumentada por generación",
+    "indicator": "E2-02-A2",
+    "institution": "Universidad Nacional de Colombia",
+    "partners": ["Vicerrectoría General", "LabIA", "GCPDS"],
+    "trl": "TRL 6 (prototipo operativo)",
+    "timeUnit": "fortnight",
+    "periods": [
+      { "index": 1, "label": "14–31 ago 2026", "startDate": "2026-08-14", "endDate": "2026-08-31" },
+      { "index": 2, "label": "1–15 sep 2026", "startDate": "2026-09-01", "endDate": "2026-09-15" },
+      { "index": 3, "label": "16–30 sep 2026", "startDate": "2026-09-16", "endDate": "2026-09-30" },
+      { "index": 4, "label": "1–15 oct 2026", "startDate": "2026-10-01", "endDate": "2026-10-15" },
+      { "index": 5, "label": "16–31 oct 2026", "startDate": "2026-10-16", "endDate": "2026-10-31" },
+      { "index": 6, "label": "1–15 nov 2026", "startDate": "2026-11-01", "endDate": "2026-11-15" },
+      { "index": 7, "label": "16–30 nov 2026", "startDate": "2026-11-16", "endDate": "2026-11-30" }
+    ],
+    "description": "Seguimiento de la ejecución del prototipo de tablero institucional que consolida, de forma trazable y citable, la evidencia dispersa en rúbricas, evaluaciones e informes de organismos de control del sistema de auditoría interna.",
+    "generalObjective": "Diseñar un prototipo de tablero institucional basado en agentes de recuperación aumentada por generación, que consolide de forma trazable y confiable la evidencia dispersa en rúbricas, evaluaciones e informes de organismos de control del sistema de auditoría interna de la Universidad Nacional de Colombia (indicador E2-02-A2), garantizando respuestas citables y verificables para la toma de decisiones gerenciales oportunas; su validación se llevará a cabo mediante casos de uso priorizados en el entorno de aplicación real de la Vicerrectoría General, con participación directa de sus usuarios decisores.",
+    "specificObjectives": [
+      {
+        "code": "OE1",
+        "problem": "SP1 — falta de un pipeline trazable de evidencias.",
+        "statement": "Implementar un pipeline de recuperación aumentada por generación (ingesta ETL de documentos, segmentación, indexación en base de datos vectorial y generación con LLM) sobre rúbricas, evaluaciones e informes de organismos de control, con trazabilidad de fuentes, control de contexto y citación verificable; validación mediante pruebas funcionales sobre los casos de uso del indicador E2-02-A2, midiendo exactitud de recuperación y fidelidad de las citas."
+      },
+      {
+        "code": "OE2",
+        "problem": "SP2 — limitada capacidad de consulta interactiva.",
+        "statement": "Desarrollar una interfaz conversacional de agente sobre el tablero de KPIs, matrices de indicadores y visualizaciones, que permita a audiencias no técnicas consultar e interpretar en lenguaje natural los indicadores y la evidencia subyacente, integrando la capa de acceso a datos institucional; validación por pruebas de comprensión, usabilidad y carga cognitiva con usuarios decisores."
+      },
+      {
+        "code": "OE3",
+        "problem": "SP3 — ausencia de mecanismos de calidad y confiabilidad.",
+        "statement": "Integrar un grafo de conocimiento de las entidades del dominio de auditoría (normas, procesos, hallazgos y unidades) a la generación, junto con cuantificación de incertidumbre semántica y abstención por confianza, para calificar la confiabilidad de cada respuesta y reducir respuestas no verificables; validación por métricas de fidelidad, calibración y tasa de abstención frente a líneas base generativas."
+      }
+    ],
+    "scope": [
+      "Acervo de 23 archivos en tres orígenes institucionales: 151 tablas y 273 unidades citables.",
+      "Formatos procesados: 18 PDF (Marker), 2 DOCX (pandoc), 2 DOC (textutil y pandoc), 1 XLSX (openpyxl).",
+      "Unidad de análisis: el segmento citable, estable en el par (doc_id, ord) y autosuficiente al conservar su encabezado.",
+      "Para cifras, la unidad es la tripleta (doc_id, table, row): 808 cifras con procedencia completa.",
+      "Recuperación léxica y estructurada sobre FTS5; el índice vectorial queda como diseño entregado, no construido."
+    ],
+    "outOfScope": [
+      "No hay ejecución presupuestal: la plataforma reporta distribución, no ejecución.",
+      "No se publican totales agregados propios; cuando el total impreso difiere de la suma detallada se publican ambos y la diferencia como hallazgo.",
+      "La cobertura de 413 estudiantes en 7 sedes es declarada por un único documento y no verificada contra una contraparte.",
+      "Una sede (La Paz) queda sin financiación declarada; se publica como hallazgo y no se interpola.",
+      "Queda fuera concluir que el programa ejecutó un porcentaje de recursos, que recibió un monto acumulado 2023–2025, o que un informe oficial se equivoca."
+    ],
+    "sourceRepository": "https://github.com/LIAUNAL/InformeTecnico_Dashboards_VG",
+    "notes": [
+      "El tablero operativo refleja el cronograma de quincenas de diag_gantt.tex, que es el único con estado de ejecución por actividad.",
+      "La asignación de responsables por fase es derivada: la fuente rotula las cuatro actividades reportadas y las fases del cronograma con taxonomías distintas.",
+      "Este tablero es público y excluye deliberadamente presupuesto, tarifas, valores contractuales e identificadores personales presentes en el repositorio fuente privado."
+    ]
+  },
+  "roadmap": {
+    "timeUnit": "month",
+    "horizonMonths": 24,
+    "source": "proposal/sections/06_cronograma.tex — plan de la propuesta, horizonte distinto al de la ejecución en curso.",
+    "phases": [
+      { "id": "r-f0", "title": "Fase 0. Preparación", "objective": "Caracterización del corpus, caso de uso e infraestructura.", "startMonth": 1, "durationMonths": 2 },
+      { "id": "r-f1", "title": "Fase 1. Pipeline RAG trazable", "objective": "OE1: arquitectura, ETL y chunking calibrado, indexación y generación citada, pruebas funcionales.", "startMonth": 2, "durationMonths": 7 },
+      { "id": "r-f2", "title": "Fase 2. Agente conversacional", "objective": "OE2: diseño de interacción, agente sobre los KPIs, capa Text-to-SQL y documental, pruebas con decisores.", "startMonth": 7, "durationMonths": 8 },
+      { "id": "r-f3", "title": "Fase 3. Grafo e incertidumbre", "objective": "OE3: grafo de conocimiento del dominio, incertidumbre y abstención, calibración orientada a decisión.", "startMonth": 11, "durationMonths": 7 },
+      { "id": "r-f4", "title": "Fase 4. Integración y validación", "objective": "Integración y despliegue, validación en entorno real, transferencia e informe final.", "startMonth": 17, "durationMonths": 8 },
+      { "id": "r-tr", "title": "Actividades transversales", "objective": "Gestión y seguimiento durante todo el horizonte; divulgación de resultados desde el mes 18.", "startMonth": 1, "durationMonths": 24 }
+    ],
+    "milestones": [
+      { "id": "r-h1", "code": "H1", "title": "Reporte de preparación del corpus y casos de uso priorizados E2-02-A2.", "month": 2 },
+      { "id": "r-h2", "code": "H2", "title": "Pipeline RAG operativo con pruebas funcionales de exactitud y fidelidad de citas.", "month": 8 },
+      { "id": "r-h3", "code": "H3", "title": "Interfaz conversacional integrada al tablero de KPIs, validada en comprensión, usabilidad y carga cognitiva.", "month": 14 },
+      { "id": "r-h4", "code": "H4", "title": "Grafo de conocimiento integrado con calificación de confiabilidad y abstención.", "month": 17 },
+      { "id": "r-h5", "code": "H5", "title": "Prototipo integrado desplegado y validado frente a líneas base; documenta el paso de TRL 6 a TRL 7.", "month": 22 },
+      { "id": "r-h6", "code": "H6", "title": "Transferencia tecnológica, documentación técnica e informe final.", "month": 24 }
+    ]
+  },
+  "people": [
+    { "id": "juan-carlos", "name": "Juan Carlos", "role": "Responsable — proceso ETL con OCR y esquema de datos", "kind": "human" },
+    { "id": "carlos-perez", "name": "Carlos Pérez", "role": "Responsable — modelo de datos del prototipo", "kind": "human" },
+    { "id": "diego-perez", "name": "Diego Pérez", "role": "Responsable — módulos backend, APIs y servicios", "kind": "human" },
+    { "id": "sebastian-mendez", "name": "Sebastián Méndez", "role": "Responsable — arquitectura funcional de agentes RAG", "kind": "human" },
+    { "id": "gcpds", "name": "GCPDS", "role": "Responsable — informe técnico general y coordinación", "kind": "human" }
+  ],
+  "epics": [
+    {
+      "id": "f1",
+      "key": "F1",
+      "title": "Base de datos probatoria",
+      "objective": "Consolidar el acervo en una base relacional con procedencia e integridad verificables.",
+      "objectiveRef": "OE1",
+      "owner": "juan-carlos",
+      "startPeriod": 1,
+      "duration": 2,
+      "color": "#047857"
+    },
+    {
+      "id": "f2",
+      "key": "F2",
+      "title": "Conciliación y tablero",
+      "objective": "Detectar discrepancias entre lo impreso y lo detallado, y exponerlas en un panel ejecutivo con cita al artículo.",
+      "objectiveRef": "OE2",
+      "owner": "diego-perez",
+      "startPeriod": 2,
+      "duration": 2,
+      "color": "#0369a1"
+    },
+    {
+      "id": "f3",
+      "key": "F3",
+      "title": "Copiloto con evidencia",
+      "objective": "Responder con recuperación aumentada, Text-to-SQL y verificación de cifras, sin afirmaciones sin fragmento de respaldo.",
+      "objectiveRef": "OE3",
+      "owner": "sebastian-mendez",
+      "startPeriod": 2,
+      "duration": 4,
+      "color": "#7c3aed"
+    },
+    {
+      "id": "f4",
+      "key": "F4",
+      "title": "Despliegue institucional",
+      "objective": "Llevar el prototipo a infraestructura institucional con dominio, identidad, base gestionada e ingesta programada.",
+      "objectiveRef": "OE4 — referenciado en el cronograma de ejecución, sin objetivo específico declarado en la propuesta.",
+      "owner": "diego-perez",
+      "startPeriod": 3,
+      "duration": 5,
+      "color": "#b45309"
+    },
+    {
+      "id": "tr",
+      "key": "TR",
+      "title": "Transversal",
+      "objective": "Documentación, informes técnicos y seguimiento a lo largo de toda la ejecución.",
+      "owner": "gcpds",
+      "startPeriod": 1,
+      "duration": 7,
+      "color": "#475569"
+    }
+  ],
+  "items": [
+    { "id": "i-1a", "key": "F1-a", "epic": "f1", "title": "Sincronización del acervo y enrutamiento por formato", "type": "task", "status": "done", "owner": "juan-carlos", "startPeriod": 1, "duration": 1, "notes": "23 de 23 archivos procesados, sin extracciones vacías." },
+    { "id": "i-1b", "key": "F1-b", "epic": "f1", "title": "OCR estructurado y extracción de tablas", "type": "task", "status": "done", "owner": "juan-carlos", "startPeriod": 1, "duration": 2, "notes": "151 tablas cargadas, todas con encabezado recuperado." },
+    { "id": "i-1c", "key": "F1-c", "epic": "f1", "title": "Modelo relacional con procedencia e integridad", "type": "task", "status": "done", "owner": "carlos-perez", "startPeriod": 2, "duration": 1, "notes": "Núcleo de tres entidades: documents, table_catalog y chunks." },
+    { "id": "i-2a", "key": "F2-a", "epic": "f2", "title": "Reglas de conciliación y detección de discrepancias", "type": "task", "status": "done", "owner": "diego-perez", "startPeriod": 2, "duration": 2, "notes": "Ocho reglas de información sobre el modelo consolidado." },
+    { "id": "i-2b", "key": "F2-b", "epic": "f2", "title": "Topología financiera y panel ejecutivo", "type": "task", "status": "done", "owner": "diego-perez", "startPeriod": 2, "duration": 2 },
+    { "id": "i-2c", "key": "F2-c", "epic": "f2", "title": "Cajón forense con cita al artículo y consulta SQL", "type": "task", "status": "done", "owner": "diego-perez", "startPeriod": 3, "duration": 1 },
+    { "id": "i-3a", "key": "F3-a", "epic": "f3", "title": "Recuperación aumentada, Text-to-SQL y cálculo", "type": "task", "status": "done", "owner": "sebastian-mendez", "startPeriod": 2, "duration": 2 },
+    { "id": "i-3b", "key": "F3-b", "epic": "f3", "title": "Generación de gráficos y verificación visual", "type": "task", "status": "done", "owner": "sebastian-mendez", "startPeriod": 3, "duration": 1 },
+    { "id": "i-3c", "key": "F3-c", "epic": "f3", "title": "Evaluación de fidelidad de las citas y ajuste", "type": "task", "status": "todo", "owner": "sebastian-mendez", "startPeriod": 4, "duration": 2, "notes": "Umbrales de referencia: cobertura@10 ≥ 0,90; precisión de cifra 1,00; tasa de cita 1,00; abstención correcta ≥ 0,95." },
+    { "id": "i-4a", "key": "F4-a", "epic": "f4", "title": "Propuesta de arquitectura, opciones y costos", "type": "doc", "status": "done", "owner": "diego-perez", "startPeriod": 3, "duration": 1 },
+    { "id": "i-4b", "key": "F4-b", "epic": "f4", "title": "Dominio, certificado y máquina de aplicación", "type": "task", "status": "todo", "owner": "diego-perez", "startPeriod": 4, "duration": 1 },
+    { "id": "i-4c", "key": "F4-c", "epic": "f4", "title": "Identidad institucional y zonas de acceso", "type": "task", "status": "todo", "owner": "diego-perez", "startPeriod": 4, "duration": 2 },
+    { "id": "i-4d", "key": "F4-d", "epic": "f4", "title": "Base de datos gestionada e ingesta programada", "type": "task", "status": "todo", "owner": "diego-perez", "startPeriod": 5, "duration": 2 },
+    { "id": "i-4e", "key": "F4-e", "epic": "f4", "title": "Copiloto sobre la API, entrega y capacitación", "type": "task", "status": "todo", "owner": "sebastian-mendez", "startPeriod": 6, "duration": 2 },
+    { "id": "i-tr1", "key": "TR-1", "epic": "tr", "title": "Documentación e informes técnicos", "type": "doc", "status": "done", "owner": "gcpds", "startPeriod": 1, "duration": 3 },
+    { "id": "i-tr2", "key": "TR-2", "epic": "tr", "title": "Documentación e informes técnicos (continuación)", "type": "doc", "status": "todo", "owner": "gcpds", "startPeriod": 4, "duration": 4 },
+    { "id": "i-a1", "key": "ACT-1", "epic": "f1", "title": "Actividad 1 — construcción del proceso ETL con OCR y diseño del esquema de datos", "type": "epic", "status": "done", "owner": "juan-carlos", "notes": "Reportada como completada en el informe técnico." },
+    { "id": "i-a2", "key": "ACT-2", "epic": "f1", "title": "Actividad 2 — modelo de datos del prototipo: diagrama y especificaciones entidad-relación", "type": "epic", "status": "done", "owner": "carlos-perez", "notes": "Reportada como completada en el informe técnico." },
+    { "id": "i-a3", "key": "ACT-3", "epic": "f2", "title": "Actividad 3 — módulos backend de gestión de datos, APIs y servicios", "type": "epic", "status": "done", "owner": "diego-perez", "notes": "Completada como CLI, biblioteca embebida y artefactos versionados; la API HTTP queda pendiente de transporte, autenticación y despliegue." },
+    { "id": "i-a4", "key": "ACT-4", "epic": "f3", "title": "Actividad 4 — arquitectura funcional de los agentes RAG", "type": "epic", "status": "review", "owner": "sebastian-mendez", "notes": "Diseño completado. No entregados: el índice vectorial construido, la selección definitiva del modelo de incrustación y la implementación de los agentes." }
+  ],
+  "deliverables": [
+    { "id": "d-db", "title": "Base de datos relacional", "epic": "f1", "duePeriod": 2, "status": "done", "location": "data/data.db", "acceptance": "154 tablas, 23 documentos, 273 unidades citables e índice FTS5." },
+    { "id": "d-index", "title": "Ficha de índice del acervo", "epic": "f1", "duePeriod": 2, "status": "done", "location": "data/INDEX.md", "acceptance": "Resumen consultable del acervo en unos cientos de palabras." },
+    { "id": "d-ingest", "title": "Proceso de ingesta documental", "epic": "f1", "duePeriod": 2, "status": "done", "location": ".claude/skills/pdf-ingestion/", "acceptance": "Carga con OCR, tipado y consolidación." },
+    { "id": "d-published", "title": "Base publicada para el navegador", "epic": "f2", "duePeriod": 3, "status": "done", "location": "docs/data/pic.sqlite", "acceptance": "Misma información que la base de trabajo, consultable desde el navegador." },
+    { "id": "d-artifacts", "title": "Artefactos de datos", "epic": "f2", "duePeriod": 3, "status": "done", "location": "docs/data/*.json", "acceptance": "Cifras con procedencia, hallazgos, agregados y fichas por documento." },
+    { "id": "d-dashboard", "title": "Tablero estático", "epic": "f2", "duePeriod": 3, "status": "done", "location": "docs/", "acceptance": "Sitio estático autosuficiente, sin dependencias en tiempo de ejecución." },
+    { "id": "d-rules", "title": "Motor de auditoría", "epic": "f2", "duePeriod": 3, "status": "done", "location": "scripts/info_rules.py, scripts/build_site.py", "acceptance": "Diecisiete reglas estructurales y semánticas." },
+    { "id": "d-exec", "title": "Agregación ejecutiva", "epic": "f2", "duePeriod": 3, "status": "done", "location": "scripts/executive.py", "acceptance": "Distribuciones, planeación, cobertura y conciliación entre documentos." },
+    { "id": "d-serve", "title": "Servicio local", "epic": "f2", "duePeriod": 3, "status": "done", "location": "scripts/serve.py", "acceptance": "Despliegue en un comando, sin dependencias." },
+    { "id": "d-contract", "title": "Prueba de contrato del panel ejecutivo", "epic": "f2", "duePeriod": 3, "status": "done", "location": "tests/executive-layout.cjs", "acceptance": "Verifica la composición del panel sin navegador." },
+    { "id": "d-deploy-skill", "title": "Habilidad de despliegue", "epic": "f4", "duePeriod": 3, "status": "done", "location": ".claude/skills/dashboard-local/", "acceptance": "Procedimiento de despliegue invocable y versionado." },
+    { "id": "d-specs", "title": "Especificaciones de construcción e interfaz", "epic": "tr", "duePeriod": 3, "status": "done", "location": "openspec/specs/", "acceptance": "Contratos de construcción, interfaz y detección de inconsistencias." },
+    { "id": "d-report", "title": "Informe técnico general", "epic": "tr", "duePeriod": 3, "status": "done", "location": "proposal/main.tex", "acceptance": "Motivación, problema, objetivos, metodología, resultados esperados, cronograma, conclusiones y anexos." },
+    { "id": "d-partials", "title": "Informes parciales por actividad", "epic": "tr", "duePeriod": 3, "status": "done", "location": "proposal/actividades/", "acceptance": "Uno por actividad, independiente y compilable por separado." },
+    { "id": "d-citations", "title": "Evaluación de fidelidad de citas", "epic": "f3", "duePeriod": 5, "status": "todo", "acceptance": "Cobertura@10 ≥ 0,90; precisión de cifra 1,00; tasa de cita 1,00; abstención correcta ≥ 0,95." },
+    { "id": "d-infra", "title": "Infraestructura institucional en operación", "epic": "f4", "duePeriod": 6, "status": "todo", "acceptance": "Dominio, certificado, identidad institucional, base gestionada e ingesta programada." },
+    { "id": "d-handover", "title": "Entrega y capacitación", "epic": "f4", "duePeriod": 7, "status": "todo", "acceptance": "Copiloto sobre la API, documentación de operación y sesión de capacitación." }
+  ],
+  "milestones": [
+    { "id": "m1", "code": "M1", "title": "Presentación a la dirección universitaria", "period": 3, "status": "done", "description": "Cierre del avance de las fases 1 a 3 y de la propuesta de arquitectura de despliegue." },
+    { "id": "m2", "code": "M2", "title": "Cierre y entrega final", "period": 7, "status": "todo", "description": "Copiloto sobre la API en operación, entrega documental y capacitación." }
+  ],
+  "findings": [
+    { "id": "h-schedules", "title": "Los dos cronogramas de la fuente no coinciden", "severity": "high", "detail": "El informe contiene un plan a 24 meses con hitos H1–H6 y un cronograma de ejecución en 7 quincenas con hitos M1–M2. No se halló en la fuente una relación explícita entre ambos. Este tablero sigue el de quincenas porque es el único con estado de ejecución." },
+    { "id": "h-oe4", "title": "El cronograma referencia un OE4 que no existe en los objetivos", "severity": "medium", "detail": "La fase 4 del cronograma de ejecución se rotula como OE4, pero la sección de objetivos declara únicamente OE1, OE2 y OE3." },
+    { "id": "h-tables", "title": "Tablas declaradas frente a tablas medidas", "severity": "medium", "detail": "El modelo declara 55 tablas; la medición sobre el acervo arroja 154. Ninguna operación reproduce 55. El informe usa el valor medido." },
+    { "id": "h-figures", "title": "Cifras trazables declaradas frente a medidas", "severity": "medium", "detail": "Se declaran 428 cifras trazables; la medición arroja 808 tripletas distintas. El informe usa el valor medido." },
+    { "id": "h-coverage", "title": "Cobertura declarada y no verificada", "severity": "medium", "detail": "Los 413 estudiantes en 7 sedes provienen de un único documento cualitativo, sin contraparte que permita verificarlos." },
+    { "id": "h-lapaz", "title": "Una sede sin financiación declarada", "severity": "medium", "detail": "El registro de proyectos nombra 9 sedes y aporta cifras para 8. La sede de La Paz se publica como hallazgo; no se interpola ni se omite." }
+  ]
+}
