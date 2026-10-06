@@ -133,7 +133,11 @@
           "startPeriod": { "type": "integer", "minimum": 1 },
           "duration": { "type": "integer", "minimum": 1 },
           "objectiveRef": { "type": "string" },
-          "color": { "type": "string" }
+          "color": {
+            "type": "string",
+            "enum": ["frontend", "backend", "database", "cloud", "security", "messagebus", "external"],
+            "description": "Semantic accent family from the Archify visual system. A token name rather than a hex value, because each family resolves to a different colour per theme."
+          }
         }
       }
     },
